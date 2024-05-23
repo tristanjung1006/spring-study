@@ -3,10 +3,12 @@ package com.example.demo.service;
 import com.example.demo.domain.Member;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.MemoryMemberRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MemberService {
 
     // MemberService의 테스트 코드르 작성하려면 Ctrl + Shift + T로 틀을 빠르게 만들 수 있다.

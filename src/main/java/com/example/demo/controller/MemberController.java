@@ -7,12 +7,17 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class MemberController {
 
-    private final MemberService memberService;
+    private MemberService memberService;
 
     // MemberController가 생성될 때 스프링 빈에 등록되어있는 MemberService를 객체를 가져다가 넣어준다
 
+//    @Autowired
+//    public MemberController(MemberService memberService) {
+//        this.memberService = memberService;
+//    }
+
     @Autowired
-    public MemberController(MemberService memberService) {
+    public void setMemberService(MemberService memberService) {
         this.memberService = memberService;
     }
 }

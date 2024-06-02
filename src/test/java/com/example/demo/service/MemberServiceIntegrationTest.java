@@ -1,37 +1,44 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Member;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MemberServiceTest {
+@SpringBootTest
+@Transactional
+class MemberServiceIntegrationTest {
 
 
-    MemberService memberService;
-    MemoryMemberRepository memberRepository = new MemoryMemberRepository();
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
 
-    @BeforeEach
-    public void beforeEach() {
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
+//    @BeforeEach
+//    public void beforeEach() {
+//        memberRepository = new MemoryMemberRepository();
+//        memberService = new MemberService(memberRepository);
+//    }
 
-    @AfterEach
-    public void afterEach() {
-        memberRepository.clearStore(); // 메모리 클리어
-    }
+//    @AfterEach
+//    public void afterEach() {
+//        memberRepository.clearStore(); // 메모리 클리어
+//    }
 
     // 테스트 코드는 실제 코드가 아니므로 한글로 작성해도 된다
     @Test
     void 회원가입() {
         //given
         Member member = new Member();
-        member.setName("hello");
+        member.setName("spring100");
 
         //when
         Long saveId = memberService.join(member);
@@ -46,7 +53,7 @@ class MemberServiceTest {
     public void 중복_회원_예외() {
         //given
         Member member = new Member();
-        member.setName("hello");
+        member.setName("spring");
 
         Member member2 = new Member();
         member2.setName("hello2");
@@ -54,22 +61,5 @@ class MemberServiceTest {
         //when
         memberService.join(member);
         assertThrows(IllegalStateException.class, () -> memberService.join(member2));
-        try {
-            memberService.join(member2);
-            fail();
-        } catch (IllegalStateException ignored) {
-            assertTrue(true);
-        }
-        memberService.join(member);
-
-        //then
-    }
-
-    @Test
-    void findMembers() {
-    }
-
-    @Test
-    void findOne() {
     }
 }
